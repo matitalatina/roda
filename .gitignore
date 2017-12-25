@@ -162,3 +162,7 @@ typings/
 
 # Pycharm stuff
 .idea/
+
+# dev DB
+db.sqlite3
+data_measurements_finals.csv
