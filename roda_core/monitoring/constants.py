@@ -15,3 +15,4 @@ TYRE_POSITIONS = (
     (TYRE_POSITION_REAR_RIGHT, TYRE_POSITION_REAR_RIGHT_LABEL),
 )
 
+SAMPLE_DATA_PATH = 'resources/data_measurements_finals.csv'

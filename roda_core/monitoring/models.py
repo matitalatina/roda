@@ -1,20 +1,27 @@
+from datetime import datetime
+
 from django.db import models
+
+from monitoring.constants import TYRE_POSITIONS
 
 
 class TyreMeasurement(models.Model):
 
     timestamp = models.DateTimeField(
-        auto_add_now=True,
+        default=datetime.now,
         verbose_name='Timestamp',
     )
     position = models.CharField(
         max_length=2,
+        choices=TYRE_POSITIONS,
     )
     pressure = models.FloatField(
         verbose_name='Pressure [bar]',
+        blank=True, null=True,
     )
     temperature = models.FloatField(
         verbose_name='Temperature [C˚]',
+        blank=True, null=True,
     )
     omega = models.FloatField(
         verbose_name='Angular Velocity',
