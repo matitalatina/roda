@@ -1,0 +1,25 @@
+{
+  "name": "roda-web",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "font-awesome": "^4.7.0",
+    "lodash": "^4.17.4",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.17",
+    "styled-components": "^2.4.0",
+    "styled-theme": "^0.3.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "eslint": "^4.14.0",
+    "eslint-config-airbnb": "^16.1.0"
+  }
+}
