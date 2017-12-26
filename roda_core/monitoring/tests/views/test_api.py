@@ -6,8 +6,9 @@ from rest_framework.fields import DateTimeField
 from rest_framework.test import APITestCase
 
 from monitoring.models import TyreMeasurement
-from monitoring.serializers import TyreMeasurementSerializer
+from monitoring.serializers import TyreMeasurementSerializer, CarSerializer
 from monitoring.tests.fixtures import load_tyre_measurements, load_tyre_measurement
+from monitoring.viewmodels import Car
 
 
 class TyreMeasurementViewSetTestCase(APITestCase):
@@ -66,3 +67,14 @@ class TyreMeasurementViewSetTestCase(APITestCase):
             results,
             TyreMeasurementSerializer(TyreMeasurement.objects.all().order_by('timestamp'), many=True).data
         )
+
+
+class CarViewSetTestCase(APITestCase):
+    def setUp(self):
+        self.measurements = load_tyre_measurements()
+
+    def test_get_list(self):
+        response = self.client.get(reverse('cars-list'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        expected_cars = set(TyreMeasurement.objects.all().values_list('car', flat=True))
+        self.assertEqual({car['id'] for car in response.data['results']}, expected_cars)
