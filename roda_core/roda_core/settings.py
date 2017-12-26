@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'rodadb',
         'USER': 'roda-admin',
         'PASSWORD': 'roda-password',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': 5432,
     }
 }

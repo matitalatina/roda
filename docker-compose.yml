@@ -15,7 +15,7 @@ services:
     build: ./roda_core
     command: ["./wait-for-it.sh", "db:5432", "--", "./start.sh"]
     volumes:
-      - .:/code
+      - ./roda_core:/code
     ports:
       - "8000:8000"
     depends_on:
