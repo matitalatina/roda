@@ -5,6 +5,10 @@ services:
     image: postgres
     ports:
       - 5432:5432
+    environment:
+      POSTGRES_USER: roda-admin
+      POSTGRES_PASSWORD: roda-password
+      POSTGRES_DB: rodadb
     networks:
       - backend
   core:

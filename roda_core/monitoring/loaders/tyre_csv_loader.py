@@ -1,16 +1,18 @@
 import csv
 from datetime import datetime
 
+from tqdm import tqdm
+
 from monitoring import constants
 from monitoring.models import TyreMeasurement
 
-FIELD_TIMESTAMP = 'Timestamp'
-FIELD_PRESSURE = 'Press'
-FIELD_POSITION = 'Position'
-FIELD_TEMPERATURE = 'Temp'
-FIELD_ANGULAR_VELOCITY = 'Omega'
-FIELD_SPEED = 'Speed'
-FIELD_CAR_ID = 'Car_id'
+FIELD_TIMESTAMP = 1
+FIELD_PRESSURE = 2
+FIELD_POSITION = 3
+FIELD_TEMPERATURE = 4
+FIELD_ANGULAR_VELOCITY = 5
+FIELD_SPEED = 6
+FIELD_CAR_ID = 7
 
 FIELD_TIMESTAMP_FORMAT = '%Y-%m-%d %H:%M:%S'
 
@@ -26,17 +28,31 @@ class CannotImportMeasurement(Exception):
 
 
 class TyreCsvLoader(object):
-    def __init__(self, file_path):
+    def __init__(self, file_path, show_progress=False):
         self.file_path = file_path
+        self.show_progress = show_progress
 
     def load_into_db(self):
         with open(self.file_path, newline='') as csvfile:
-            tyre_reader = csv.DictReader(csvfile)
+            tyre_reader = csv.reader(csvfile)
             try:
+                # Skip header
+                next(tyre_reader)
+                if self.show_progress:
+                    total_count = sum(1 for _ in open(self.file_path))
+                    tyre_reader = tqdm(tyre_reader, total=total_count, desc='Reading CSV data')
                 measurements = [self._translate_row(row) for row in tyre_reader]
-                TyreMeasurement.objects.bulk_create(measurements)
+
+                self._print('Saving into DB...')
+                TyreMeasurement.objects.bulk_create(measurements, batch_size=10000)
+                self._print('Import complete!')
+
             except CannotImportMeasurement as e:
-                print('Error in row {}'.format(e.row.items()))
+                self._print('Error in row {}'.format(e.row))
+
+    def _print(self, message):
+        if self.show_progress:
+            print(message)
 
     @staticmethod
     def _translate_position(raw_position):

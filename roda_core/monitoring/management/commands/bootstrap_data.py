@@ -21,4 +21,4 @@ class Command(BaseCommand):
 
         if not TyreMeasurement.objects.all().exists():
             print('Populating DB with sample data...')
-            TyreCsvLoader(file_path=csv_path).load_into_db()
+            TyreCsvLoader(file_path=csv_path, show_progress=True).load_into_db()

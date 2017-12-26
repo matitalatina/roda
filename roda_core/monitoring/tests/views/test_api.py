@@ -6,9 +6,8 @@ from rest_framework.fields import DateTimeField
 from rest_framework.test import APITestCase
 
 from monitoring.models import TyreMeasurement
-from monitoring.serializers import TyreMeasurementSerializer, CarSerializer
+from monitoring.serializers import TyreMeasurementSerializer
 from monitoring.tests.fixtures import load_tyre_measurements, load_tyre_measurement
-from monitoring.viewmodels import Car
 
 
 class TyreMeasurementViewSetTestCase(APITestCase):
