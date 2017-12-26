@@ -17,11 +17,14 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from rest_framework_swagger.views import get_swagger_view
 
 router = DefaultRouter()
+schema_view = get_swagger_view(title='Röda Project - API')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^$', schema_view),
     url(r'^monitoring/', include('monitoring.urls', namespace="monitoring")),
     url(r'^api/', include(router.urls)),
 ]
