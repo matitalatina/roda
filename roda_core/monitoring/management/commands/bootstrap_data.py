@@ -18,7 +18,7 @@ class Command(BaseCommand):
     def handle(self, csv_path, *args, **options):
         if csv_path is None:
             csv_path = SAMPLE_DATA_PATH
-            
+
         if not TyreMeasurement.objects.all().exists():
             print('Populating DB with sample data...')
             TyreCsvLoader(file_path=csv_path).load_into_db()

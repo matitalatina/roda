@@ -14,6 +14,7 @@ class TyreMeasurementSerializerTestCase(TestCase):
         serializer_data = TyreMeasurementSerializer(measurement).data
         self.assertEqual(datetime.strptime(serializer_data['timestamp'], '%Y-%m-%dT%H:%M:%S'), measurement.timestamp)
         expected_fields = [
+            'id',
             'position',
             'pressure',
             'temperature',
