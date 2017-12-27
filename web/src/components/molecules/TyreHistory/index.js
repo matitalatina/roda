@@ -18,9 +18,12 @@ const TyreHistory = ({ tyres }) => {
     .toPairs()
     .orderBy(([timestamp]) => timestamp)
     .value()
+
+  const charts = TyreMeasurement.AVAILABLE_MEASUREMENTS
+    .map(measurement => <TyreCharts groupedMeasurements={groupedMeasurements} property={measurement} key={measurement} />)
   return (
     <Wrapper>
-      <TyreCharts groupedMeasurements={groupedMeasurements} property="pressure" />
+      {charts}
     </Wrapper>
   )
 }
