@@ -24,7 +24,19 @@ services:
       - backend
     stdin_open: true
     tty: true
-
+  web:
+    build: ./web
+    command: ["yarn", "start"]
+    volumes:
+      - ./web:/code
+    ports:
+      - "3000:3000"
+    depends_on:
+      - core
+    networks:
+      - frontend
+    stdin_open: true
+    tty: true
 networks:
   frontend:
   backend:

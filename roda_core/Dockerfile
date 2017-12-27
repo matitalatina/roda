@@ -7,3 +7,4 @@ WORKDIR $CODE_PATH
 ADD requirements.txt $CODE_PATH/
 RUN pip install -r requirements.txt
 ADD . $CODE_PATH/
+CMD [ "./start.sh" ]
