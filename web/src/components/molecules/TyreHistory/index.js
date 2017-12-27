@@ -1,15 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { chain } from 'lodash'
 import TyreCharts from '../TyreCharts'
 import TyreMeasurement from '../../../models/TyreMeasurement'
 
 const Wrapper = styled.div``
 
 const TyreHistory = ({ tyres }) => {
+  const groupedMeasurements = chain(tyres.measurements)
+    .groupBy(t => t.timestamp)
+    .mapValues(measurements =>
+      measurements.reduce((acc, m) => {
+        acc[m.position] = m
+        return acc
+      }, {}))
+    .toPairs()
+    .orderBy(([timestamp]) => timestamp)
+    .value()
   return (
     <Wrapper>
-      <TyreCharts tyreMeasurements={tyres.measurements.filter(t => t.position === 'FL')} />
+      <TyreCharts groupedMeasurements={groupedMeasurements} property="pressure" />
     </Wrapper>
   )
 }

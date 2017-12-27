@@ -17,6 +17,10 @@ class TyreMeasurement {
       timestamp: dateTimestamp, position, pressure, temperature, omega, speed, car,
     })
   }
+
+  static get AVAILABLE_MEASUREMENTS() {
+    return ['pressure', 'temperature', 'omega', 'speed']
+  }
 }
 
 export default TyreMeasurement
