@@ -3,7 +3,7 @@ FROM node:carbon
 ENV CODE_PATH /code
 
 WORKDIR $CODE_PATH
-COPY package*.json $CODE_PATH/
+COPY package*.json yarn.lock $CODE_PATH/
 
 RUN yarn install
 

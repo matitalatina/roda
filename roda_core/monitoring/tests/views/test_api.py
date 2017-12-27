@@ -76,4 +76,5 @@ class CarViewSetTestCase(APITestCase):
         response = self.client.get(reverse('cars-list'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         expected_cars = set(TyreMeasurement.objects.all().values_list('car', flat=True))
+        self.assertEqual(len(expected_cars), len(response.data['results']))
         self.assertEqual({car['id'] for car in response.data['results']}, expected_cars)
