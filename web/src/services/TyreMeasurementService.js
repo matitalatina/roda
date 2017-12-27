@@ -1,15 +1,21 @@
+import URI from 'urijs'
 import { coreEndpoint } from '../config'
 import TyreMeasurement from '../models/TyreMeasurement'
 
-class CarsService {
+class TyreMeasurementService {
   constructor({ endpoint }) {
     this.endpoint = endpoint
   }
 
-  list({ url = null } = {}) {
-    let callUrl = url
-    if (!callUrl) {
-      callUrl = `${this.endpoint}/api/cars/`
+  list({ url = null, carId = null } = {}) {
+    let callUrl
+    if (!url) {
+      callUrl = URI(`${this.endpoint}/api/monitoring/tyres/measurements/`)
+    } else {
+      callUrl = URI(callUrl)
+    }
+    if (carId) {
+      callUrl = callUrl.setQuery('car', carId)
     }
     return fetch(callUrl)
       .then(response => response.json())
@@ -21,8 +27,8 @@ class CarsService {
   }
 
   static fromConfig() {
-    return new CarsService({ endpoint: coreEndpoint })
+    return new TyreMeasurementService({ endpoint: coreEndpoint })
   }
 }
 
-export default CarsService
+export default TyreMeasurementService

@@ -9,10 +9,12 @@
     "react": "^16.2.0",
     "react-bootstrap": "^0.31.5",
     "react-dom": "^16.2.0",
+    "react-highcharts": "^15.0.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
     "styled-components": "^2.4.0",
     "styled-theme": "^0.3.3",
+    "urijs": "^1.19.0",
     "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
