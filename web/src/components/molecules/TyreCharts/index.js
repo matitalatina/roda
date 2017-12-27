@@ -27,7 +27,7 @@ const TyreCharts = ({ tyreMeasurements }) => {
 }
 
 TyreCharts.propTypes = {
-  tyreMeasurements: PropTypes.arrayOf(TyreMeasurement),
+  tyreMeasurements: PropTypes.arrayOf(PropTypes.instanceOf(TyreMeasurement)),
 }
 
 export default TyreCharts

@@ -18,7 +18,7 @@ TyreHistory.propTypes = {
   tyres: PropTypes.shape({
     hasPrev: PropTypes.bool,
     hasNext: PropTypes.bool,
-    measurements: PropTypes.arrayOf(TyreMeasurement).isRequired,
+    measurements: PropTypes.arrayOf(PropTypes.instanceOf(TyreMeasurement)).isRequired,
   }),
 }
 
