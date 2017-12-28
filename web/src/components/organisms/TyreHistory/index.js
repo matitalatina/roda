@@ -4,9 +4,8 @@ import styled from 'styled-components'
 import { chain } from 'lodash'
 import { Well } from 'react-bootstrap'
 import TyreCharts from '../../molecules/TyreCharts'
-import TyreFilters from '../../molecules/TyreFilters'
 import TyreMeasurement from '../../../models/TyreMeasurement'
-import SelectCar from '../../molecules/SelectCar'
+import SelectCar from '../../atoms/SelectCar'
 import Car from '../../../models/Car'
 
 const Wrapper = styled.div``
@@ -15,7 +14,7 @@ const StackHorizontal = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
 `
 
 const TyreHistory = ({ cars, tyres }) => {
@@ -36,7 +35,7 @@ const TyreHistory = ({ cars, tyres }) => {
         groupedMeasurements={groupedMeasurements}
         property={measurement}
         key={measurement}
-        width={500}
+        width={550}
       />
     ))
 
