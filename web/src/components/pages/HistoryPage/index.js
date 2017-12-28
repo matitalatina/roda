@@ -5,7 +5,6 @@ import TyreHistoryContainer from '../../../containers/TyreHistory'
 const HistoryPage = () => {
   return (
     <PageTemplate>
-      HistoryPage!
       <TyreHistoryContainer />
     </PageTemplate>
   )

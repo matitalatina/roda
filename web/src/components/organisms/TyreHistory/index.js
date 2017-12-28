@@ -11,9 +11,16 @@ import Car from '../../../models/Car'
 
 const Wrapper = styled.div``
 
+const StackHorizontal = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`
+
 const TyreHistory = ({ cars, tyres }) => {
   const groupedMeasurements = chain(tyres.measurements)
-    .groupBy(t => t.timestamp)
+    .groupBy(t => t.timestamp.format('YYYY-MM-DD HH:mm'))
     .mapValues(measurements =>
       measurements.reduce((acc, m) => {
         acc[m.position] = m
@@ -24,18 +31,27 @@ const TyreHistory = ({ cars, tyres }) => {
     .value()
 
   const charts = TyreMeasurement.AVAILABLE_MEASUREMENTS
-    .map(measurement => <TyreCharts groupedMeasurements={groupedMeasurements} property={measurement} key={measurement} />)
+    .map(measurement => (
+      <TyreCharts
+        groupedMeasurements={groupedMeasurements}
+        property={measurement}
+        key={measurement}
+        width={500}
+      />
+    ))
 
   return (
     <Wrapper>
-      <Well>
+      <Well bsSize="small">
         <SelectCar
           onCarSelected={cars.onSelected}
           selectedCar={cars.selected}
           availableCars={cars.available}
         />
       </Well>
-      {charts}
+      <StackHorizontal>
+        {charts}
+      </StackHorizontal>
     </Wrapper>
   )
 }

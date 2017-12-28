@@ -7,7 +7,7 @@ import TyreMeasurement from '../../../models/TyreMeasurement'
 
 const Wrapper = styled.div``
 
-const TyreCharts = ({ groupedMeasurements, property }) => {
+const TyreCharts = ({ groupedMeasurements, property, width }) => {
   const positionsAvailable = [
     'FR',
     'FL',
@@ -17,6 +17,9 @@ const TyreCharts = ({ groupedMeasurements, property }) => {
   const chartConfig = {
     title: {
       text: startCase(property),
+    },
+    chart: {
+      width,
     },
     xAxis: {
       categories: groupedMeasurements.map(m => m[0]),
@@ -48,6 +51,11 @@ TyreCharts.propTypes = {
     PropTypes.objectOf(PropTypes.instanceOf(TyreMeasurement)),
   ]))).isRequired,
   property: PropTypes.oneOf(TyreMeasurement.AVAILABLE_MEASUREMENTS).isRequired,
+  width: PropTypes.number,
+}
+
+TyreCharts.defaultProps = {
+  width: null,
 }
 
 export default TyreCharts
