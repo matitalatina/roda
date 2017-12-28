@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { values, startCase } from 'lodash'
 import ReactHighcharts from 'react-highcharts'
 import TyreMeasurement from '../../../models/TyreMeasurement'
+import TyrePositionUtils from '../../../utils/TyrePositionUtils'
+import DateUtils from '../../../utils/DateUtils';
 
 const Wrapper = styled.div``
 
@@ -28,7 +30,8 @@ const TyreCharts = ({ groupedMeasurements, property, width }) => {
       shared: true,
     },
     series: positionsAvailable.map(position => ({
-      name: position,
+      name: TyrePositionUtils.getLabel(position),
+      color: TyrePositionUtils.getColor(position),
       data: values(groupedMeasurements).map(m => m[1]).map(groupedTyres => groupedTyres[position] ? groupedTyres[position][property] || 0 : 0),
       tooltip: {
         valueDecimals: 2,

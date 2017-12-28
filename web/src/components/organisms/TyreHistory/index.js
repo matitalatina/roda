@@ -28,7 +28,7 @@ const InputGroupSpaced = styled(InputGroup) `
 
 const TyreHistory = ({ cars, tyres }) => {
   const groupedMeasurements = chain(tyres.measurements)
-    .groupBy(t => t.timestamp.format(DateUtils.DEFAULT_FORMAT))
+    .groupBy(t => t.timestamp.format(DateUtils.DEFAULT_DATETIME_FORMAT))
     .mapValues(measurements =>
       measurements.reduce((acc, m) => {
         acc[m.position] = m

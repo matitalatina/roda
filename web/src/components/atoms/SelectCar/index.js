@@ -10,6 +10,7 @@ const SelectCar = ({ onCarSelected, selectedCar, availableCars }) => {
       value={selectedCar && selectedCar.id}
       onChange={selectedOption => onCarSelected(selectedOption.value)}
       options={availableCars.map(c => ({ value: c.id, label: c.id }))}
+      clearable={false}
     />
   )
 }
