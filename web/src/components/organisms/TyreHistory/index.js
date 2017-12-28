@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { chain } from 'lodash'
 import { Well } from 'react-bootstrap'
+import moment from 'moment'
+import Datetime from 'react-datetime'
 import TyreCharts from '../../molecules/TyreCharts'
 import TyreMeasurement from '../../../models/TyreMeasurement'
 import SelectCar from '../../atoms/SelectCar'
@@ -48,6 +50,16 @@ const TyreHistory = ({ cars, tyres }) => {
           selectedCar={cars.selected}
           availableCars={cars.available}
         />
+        <Datetime
+          value={tyres.filters.dateMin}
+          onChange={tyres.filters.onDateMinChange}
+          utc
+        />
+        <Datetime
+          value={tyres.filters.dateMax}
+          onChange={tyres.filters.onDateMaxChange}
+          utc
+        />
         <Paginator
           hasNext={tyres.hasNext}
           hasPrev={tyres.hasPrev}
@@ -73,6 +85,12 @@ TyreHistory.propTypes = {
     hasNext: PropTypes.bool.isRequired,
     onNext: PropTypes.func.isRequired,
     onPrev: PropTypes.func.isRequired,
+    filters: PropTypes.shape({
+      onDateMinChange: PropTypes.func.isRequired,
+      onDateMaxChange: PropTypes.func.isRequired,
+      dateMin: PropTypes.instanceOf(moment),
+      dateMax: PropTypes.instanceOf(moment),
+    }).isRequired,
     measurements: PropTypes.arrayOf(PropTypes.instanceOf(TyreMeasurement)).isRequired,
   }),
 }

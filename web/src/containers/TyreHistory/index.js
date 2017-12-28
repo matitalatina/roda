@@ -13,6 +13,10 @@ class TyreHistoryContainer extends Component {
         response: { results: [] },
       },
       tyres: {
+        filters: {
+          dateMax: null,
+          dateMin: null,
+        },
         response: {
           next: null,
           previous: null,
@@ -26,6 +30,8 @@ class TyreHistoryContainer extends Component {
     this.onNextMeasurements = this.onNextMeasurements.bind(this)
     this.onPrevMeasurements = this.onPrevMeasurements.bind(this)
     this.onPaginatorMeasurements = this.onPaginatorMeasurements.bind(this)
+    this.onTyreDateMinChange = this.onTyreDateMinChange.bind(this)
+    this.onTyreDateMaxChange = this.onTyreDateMaxChange.bind(this)
   }
 
   componentDidMount() {
@@ -35,7 +41,7 @@ class TyreHistoryContainer extends Component {
         this.setState({ ...this.state, cars: { ...this.state.cars, response, selected: response.results[0] } })
         return response
       })
-      .then(() => this.fetchMeasurements(this.state.cars.selected))
+      .then(() => this.fetchMeasurements({ carId: this.state.cars.selected.id }))
   }
 
   onNextMeasurements() {
@@ -44,6 +50,30 @@ class TyreHistoryContainer extends Component {
 
   onPrevMeasurements() {
     return this.onPaginatorMeasurements('next')
+  }
+
+  onTyreDateChange(property, value) {
+    const tyresFilters = {
+      ...this.state.filters,
+      [property]: value,
+    }
+    return this.fetchMeasurements({ timestampMin: tyresFilters.dateMin, timestampMax: tyresFilters.dateMax })
+      .then(() =>
+        this.setState({
+          ...this.state,
+          tyres: {
+            ...this.state.tyres,
+            filters: tyresFilters,
+          },
+        }))
+  }
+
+  onTyreDateMaxChange(value) {
+    return this.onTyreDateChange('dateMax', value)
+  }
+
+  onTyreDateMinChange(value) {
+    return this.onTyreDateChange('dateMin', value)
   }
 
   onPaginatorMeasurements(property) {
@@ -60,13 +90,22 @@ class TyreHistoryContainer extends Component {
     return measurementsResponse
   }
 
-  fetchMeasurements(car) {
-    if (car) {
+  fetchMeasurements({
+    carId = this.state.cars.selected.id,
+    timestampMin = this.state.tyres.filters.dateMin,
+    timestampMax = this.state.tyres.filters.dateMax,
+  }) {
+    if (carId) {
       const measurementService = TyreMeasurementService.fromConfig()
-      return measurementService.list({ carId: car.id })
+      const params = {
+        carId,
+        timestampMin,
+        timestampMax,
+      }
+      return measurementService.list(params)
         .then(this.setMeasurementResponseState)
     }
-    return car
+    return Promise.resolve(null)
   }
 
   selectCar(carId) {
@@ -82,6 +121,11 @@ class TyreHistoryContainer extends Component {
       hasPrev: !!this.state.tyres.response.next,
       onNext: this.onNextMeasurements,
       onPrev: this.onPrevMeasurements,
+      filters: {
+        ...this.state.filters,
+        onDateMaxChange: this.onTyreDateMaxChange,
+        onDateMinChange: this.onTyreDateMinChange,
+      },
     }
     const cars = {
       onSelected: this.selectCar,

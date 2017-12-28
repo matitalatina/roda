@@ -7,7 +7,11 @@ class TyreMeasurementService {
     this.endpoint = endpoint
   }
 
-  list({ url = null, carId = null } = {}) {
+  list({
+    url = null,
+    carId = null,
+    timestampMax = null, timestampMin = null,
+  } = {}) {
     let callUrl
     if (!url) {
       callUrl = URI(`${this.endpoint}/api/monitoring/tyres/measurements/`)
@@ -16,6 +20,12 @@ class TyreMeasurementService {
     }
     if (carId) {
       callUrl = callUrl.setQuery('car', carId)
+    }
+    if (timestampMax) {
+      callUrl = callUrl.setQuery('timestamp_max', timestampMax.toISOString())
+    }
+    if (timestampMin) {
+      callUrl = callUrl.setQuery('timestamp_min', timestampMin.toISOString())
     }
     return fetch(callUrl)
       .then(response => response.json())

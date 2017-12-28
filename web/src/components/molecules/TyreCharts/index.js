@@ -37,7 +37,7 @@ const TyreCharts = ({ groupedMeasurements, property, width }) => {
   }
   return (
     <Wrapper>
-      <ReactHighcharts config={chartConfig} />
+      <ReactHighcharts config={chartConfig} isPureConfig />
     </Wrapper>
   )
 }
