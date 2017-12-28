@@ -12,7 +12,7 @@ class TyreMeasurementService {
     if (!url) {
       callUrl = URI(`${this.endpoint}/api/monitoring/tyres/measurements/`)
     } else {
-      callUrl = URI(callUrl)
+      callUrl = URI(url)
     }
     if (carId) {
       callUrl = callUrl.setQuery('car', carId)

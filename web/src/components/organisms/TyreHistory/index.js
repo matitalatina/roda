@@ -7,6 +7,7 @@ import TyreCharts from '../../molecules/TyreCharts'
 import TyreMeasurement from '../../../models/TyreMeasurement'
 import SelectCar from '../../atoms/SelectCar'
 import Car from '../../../models/Car'
+import Paginator from '../../atoms/Paginator'
 
 const Wrapper = styled.div``
 
@@ -47,6 +48,12 @@ const TyreHistory = ({ cars, tyres }) => {
           selectedCar={cars.selected}
           availableCars={cars.available}
         />
+        <Paginator
+          hasNext={tyres.hasNext}
+          hasPrev={tyres.hasPrev}
+          onNext={tyres.onNext}
+          onPrev={tyres.onPrev}
+        />
       </Well>
       <StackHorizontal>
         {charts}
@@ -62,8 +69,10 @@ TyreHistory.propTypes = {
     available: PropTypes.arrayOf(PropTypes.instanceOf(Car)).isRequired,
   }).isRequired,
   tyres: PropTypes.shape({
-    hasPrev: PropTypes.bool,
-    hasNext: PropTypes.bool,
+    hasPrev: PropTypes.bool.isRequired,
+    hasNext: PropTypes.bool.isRequired,
+    onNext: PropTypes.func.isRequired,
+    onPrev: PropTypes.func.isRequired,
     measurements: PropTypes.arrayOf(PropTypes.instanceOf(TyreMeasurement)).isRequired,
   }),
 }
