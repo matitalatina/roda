@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { chain } from 'lodash'
-import { Well } from 'react-bootstrap'
+import { Well, Form, FormGroup, InputGroup } from 'react-bootstrap'
 import moment from 'moment'
 import Datetime from 'react-datetime'
 import TyreCharts from '../../molecules/TyreCharts'
@@ -10,6 +10,7 @@ import TyreMeasurement from '../../../models/TyreMeasurement'
 import SelectCar from '../../atoms/SelectCar'
 import Car from '../../../models/Car'
 import Paginator from '../../atoms/Paginator'
+import DateUtils from '../../../utils/DateUtils'
 
 const Wrapper = styled.div``
 
@@ -20,9 +21,14 @@ const StackHorizontal = styled.div`
   justify-content: space-around;
 `
 
+const InputGroupSpaced = styled(InputGroup) `
+  min-width: 150px;
+  margin-right: 20px;
+`
+
 const TyreHistory = ({ cars, tyres }) => {
   const groupedMeasurements = chain(tyres.measurements)
-    .groupBy(t => t.timestamp.format('YYYY-MM-DD HH:mm'))
+    .groupBy(t => t.timestamp.format(DateUtils.DEFAULT_FORMAT))
     .mapValues(measurements =>
       measurements.reduce((acc, m) => {
         acc[m.position] = m
@@ -45,27 +51,48 @@ const TyreHistory = ({ cars, tyres }) => {
   return (
     <Wrapper>
       <Well bsSize="small">
-        <SelectCar
-          onCarSelected={cars.onSelected}
-          selectedCar={cars.selected}
-          availableCars={cars.available}
-        />
-        <Datetime
-          value={tyres.filters.dateMin}
-          onChange={tyres.filters.onDateMinChange}
-          utc
-        />
-        <Datetime
-          value={tyres.filters.dateMax}
-          onChange={tyres.filters.onDateMaxChange}
-          utc
-        />
-        <Paginator
-          hasNext={tyres.hasNext}
-          hasPrev={tyres.hasPrev}
-          onNext={tyres.onNext}
-          onPrev={tyres.onPrev}
-        />
+        <Form inline>
+          <InputGroupSpaced >
+            <SelectCar
+              onCarSelected={cars.onSelected}
+              selectedCar={cars.selected}
+              availableCars={cars.available}
+            />
+          </InputGroupSpaced>
+          <FormGroup>
+            <Datetime
+              value={tyres.filters.dateMin}
+              onChange={tyres.filters.onDateMinChange}
+              utc
+              dateFormat={DateUtils.DEFAULT_DATE_FORMAT}
+              timeFormat={DateUtils.DEFAULT_TIME_FORMAT}
+              inputProps={{
+                placeholder: 'Timestamp Min',
+              }}
+            />
+          </FormGroup>
+          &nbsp; - &nbsp;
+          <FormGroup>
+            <Datetime
+              value={tyres.filters.dateMax}
+              onChange={tyres.filters.onDateMaxChange}
+              utc
+              dateFormat={DateUtils.DEFAULT_DATE_FORMAT}
+              timeFormat={DateUtils.DEFAULT_TIME_FORMAT}
+              inputProps={{
+                placeholder: 'Timestamp Max',
+              }}
+            />
+          </FormGroup>
+          <InputGroup className="pull-right">
+            <Paginator
+              hasNext={tyres.hasNext}
+              hasPrev={tyres.hasPrev}
+              onNext={tyres.onNext}
+              onPrev={tyres.onPrev}
+            />
+          </InputGroup>
+        </Form>
       </Well>
       <StackHorizontal>
         {charts}
