@@ -163,6 +163,9 @@ typings/
 # Pycharm stuff
 .idea/
 
+# VS code stuff
+.vscode/
+
 # dev DB
 db.sqlite3
 data_measurements_finals.csv
