@@ -93,6 +93,7 @@ const TyreHistory = ({ cars, tyres }) => {
             />
           </InputGroup>
         </Form>
+        <div className="clearfix" />
       </Well>
       <StackHorizontal>
         {charts}

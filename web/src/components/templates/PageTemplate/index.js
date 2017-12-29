@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { size } from 'styled-theme'
 import logoImg from '../../../resources/tire-icon.png'
+import Link from '../../atoms/Link'
+import { coreEndpoint } from '../../../config'
 
 const Wrapper = styled.div`
   display: flex;
@@ -40,8 +42,21 @@ const Footer = styled.footer`
 const FooterWrapper = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
   padding: 2rem 0;
+`
+
+const Credits = styled.div`
   font-size: 7pt;
+`
+
+const Links = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
 `
 
 const Logo = styled.img`
@@ -63,7 +78,11 @@ const PageTemplate = ({
   if (!footer) {
     footer = (
       <FooterWrapper>
-        Made with&nbsp;<span role="img" aria-label="heart">❤️</span>&nbsp;by Mattia Natali
+        <Links>
+          <Link href={`${coreEndpoint}`} target="_blank" animated>API Documentation</Link>&nbsp;·&nbsp;
+          <Link href="https://github.com/matitalatina/roda" target="_blank" animated>Source Code</Link>
+        </Links>
+        <Credits>Made with&nbsp;<span role="img" aria-label="heart">❤️</span>&nbsp;by <Link href="https://www.mattianatali.it/" target="_blank">Mattia Natali</Link></Credits>
       </FooterWrapper>
     )
   }
