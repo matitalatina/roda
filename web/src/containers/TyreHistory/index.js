@@ -110,7 +110,7 @@ class TyreHistoryContainer extends Component {
 
   selectCar(carId) {
     const selectedCar = find(this.state.cars.response.results, c => c.id === carId)
-    return this.fetchMeasurements(selectedCar)
+    return this.fetchMeasurements({ carId: selectedCar.id })
       .then(() => this.setState({ ...this.state, cars: { ...this.state.cars, selected: selectedCar } }))
   }
 

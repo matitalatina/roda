@@ -5,7 +5,6 @@ import { values, startCase } from 'lodash'
 import ReactHighcharts from 'react-highcharts'
 import TyreMeasurement from '../../../models/TyreMeasurement'
 import TyrePositionUtils from '../../../utils/TyrePositionUtils'
-import DateUtils from '../../../utils/DateUtils';
 
 const Wrapper = styled.div``
 
