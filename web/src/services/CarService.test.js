@@ -1,4 +1,4 @@
-import CarsService from './cars'
+import CarsService from './CarService'
 import { coreEndpoint } from '../config'
 
 describe('CarsService', () => {

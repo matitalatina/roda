@@ -34,6 +34,14 @@ class TyrePositionUtils {
   static getLabel(positionCode) {
     return positionMap[positionCode].label
   }
+  static getAvailablePositions() {
+    return [
+      TYRE_POSITION_FRONT_LEFT,
+      TYRE_POSITION_FRONT_RIGHT,
+      TYRE_POSITION_REAR_LEFT,
+      TYRE_POSITION_REAR_RIGHT,
+    ]
+  }
 }
 
 export default TyrePositionUtils

@@ -34,7 +34,7 @@ The Django App created is `monitoring`.
 
 #### DB
 
-The chosen DB is [PostgreSQL](https://www.postgresql.org/) with these reasons:
+The chosen DB is [PostgreSQL](https://www.postgresql.org/) for these reasons:
 - The passed data have all the same structure so we can leverage on SQL schemas.
 - For this project we don't have any heavy write/read throughput since data are loaded from the CSV.
 - In the future we can leverage on JOINS: I imagined that every measurement can have as foreign key to Car and Tyre models.
@@ -55,12 +55,15 @@ Since this project is completely dockerized, we can use [Amazon Elastic Containe
 
 ### DB
 
-The tasks in order to scale the database really depend on its usage and queries used on it. First thing to do is host the DB on cloud like [Amazon RDS](https://aws.amazon.com/rds/). If we have lot of reads we can leverage on [RDS read replicas](https://aws.amazon.com/rds/details/read-replicas/). If we have high write throughput we can scale up vertically using more powerful instances.
-Another solution that helps scaling the db is partition measurement tables based on timestamp and car id. So we don't end up with a single huge table. DB partitioning requires more informations to be effective: I think lot of users uses more often latest data so this partition can be very effective.
+The tasks in order to scale the database really depend on its usage and queries used on it.
+
+First thing to do is host the DB on cloud like [Amazon RDS](https://aws.amazon.com/rds/). If we have lot of reads we can leverage on [RDS read replicas](https://aws.amazon.com/rds/details/read-replicas/). If we have high write throughput we can scale up vertically using more powerful instances.
+
+Another solution that helps scaling the db is partition the "measurement" table based on `timestamp` and `car_id`. So we don't end up with a single huge table. DB partitioning requires more informations to be effective: I think lot of users use more often latest data so this partition can be very effective.
 
 #### NoSQL
 
-If we don't use lot of joins, [ACID](https://en.wikipedia.org/wiki/ACID) properties are not a requirement, we are paying to much, and all the options above aren't enough to scale up properly, we can switch to a NoSQL database like MongoDB. Using it we don't have to use a fixed schema and more importantly we can shard the measurement collection to scale horizontally.
+If we don't use lot of joins, [ACID](https://en.wikipedia.org/wiki/ACID) properties are not a requirement, we are paying to much, and all the options above aren't enough to scale up properly, we can switch to a NoSQL database like MongoDB. Using it we don't have to use a fixed schema and more importantly we can shard the "measurement" collection to scale horizontally.
 
 ## FAQ
 

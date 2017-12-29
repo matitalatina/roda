@@ -9,12 +9,6 @@ import TyrePositionUtils from '../../../utils/TyrePositionUtils'
 const Wrapper = styled.div``
 
 const TyreCharts = ({ groupedMeasurements, property, width }) => {
-  const positionsAvailable = [
-    'FR',
-    'FL',
-    'RR',
-    'RL',
-  ]
   const chartConfig = {
     title: {
       text: startCase(property),
@@ -28,7 +22,7 @@ const TyreCharts = ({ groupedMeasurements, property, width }) => {
     tooltip: {
       shared: true,
     },
-    series: positionsAvailable.map(position => ({
+    series: TyrePositionUtils.getAvailablePositions().map(position => ({
       name: TyrePositionUtils.getLabel(position),
       color: TyrePositionUtils.getColor(position),
       data: values(groupedMeasurements).map(m => m[1]).map(groupedTyres => groupedTyres[position] ? groupedTyres[position][property] || 0 : 0),
