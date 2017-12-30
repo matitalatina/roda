@@ -7,6 +7,10 @@ from monitoring.models import TyreMeasurement
 
 
 class Command(BaseCommand):
+    """
+    Load data from csv stored in csv_path only if TyreMeasurement table is empty.
+    """
+
     help = 'Load sample data into DB'
 
     def add_arguments(self, parser):

@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from monitoring.models import TyreMeasurement
+
+admin.site.register(TyreMeasurement)

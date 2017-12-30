@@ -4,6 +4,7 @@ from datetime import datetime
 from tqdm import tqdm
 
 from monitoring import constants
+from monitoring.constants import FIELD_TIMESTAMP_FORMAT
 from monitoring.models import TyreMeasurement
 
 FIELD_TIMESTAMP = 1
@@ -13,8 +14,6 @@ FIELD_TEMPERATURE = 4
 FIELD_ANGULAR_VELOCITY = 5
 FIELD_SPEED = 6
 FIELD_CAR_ID = 7
-
-FIELD_TIMESTAMP_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 
 class PositionNotValidError(Exception):
@@ -28,6 +27,12 @@ class CannotImportMeasurement(Exception):
 
 
 class TyreCsvLoader(object):
+    """
+    Loads TyreMeasurements model from CSV file.
+
+    Expected CSV structure:
+    id (Not used),Timestamp ['%Y-%m-%d %H:%M:%S'],Press,Position,Temp,Omega,Speed,Car_id
+    """
     def __init__(self, file_path, show_progress=False):
         self.file_path = file_path
         self.show_progress = show_progress
@@ -73,9 +78,9 @@ class TyreCsvLoader(object):
             return TyreMeasurement(
                 timestamp=datetime.strptime(row[FIELD_TIMESTAMP], FIELD_TIMESTAMP_FORMAT),
                 position=cls._translate_position(row[FIELD_POSITION]),
-                pressure=row[FIELD_PRESSURE] or None,
+                pressure=abs(float(row[FIELD_PRESSURE])) if row[FIELD_PRESSURE] else None,
                 temperature=row[FIELD_TEMPERATURE] or None,
-                omega=row[FIELD_ANGULAR_VELOCITY],
+                omega=abs(float(row[FIELD_ANGULAR_VELOCITY])),
                 speed=row[FIELD_SPEED],
                 car=row[FIELD_CAR_ID],
             )

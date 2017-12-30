@@ -33,3 +33,6 @@ class TyreMeasurement(models.Model):
         max_length=255,
         verbose_name='Car',
     )
+
+    def __str__(self):
+        return '{}, {}, {}'.format(self.car, self.timestamp, dict(TYRE_POSITIONS)[self.position])

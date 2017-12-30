@@ -16,3 +16,4 @@ TYRE_POSITIONS = (
 )
 
 SAMPLE_DATA_PATH = 'resources/data_measurements_finals.csv'
+FIELD_TIMESTAMP_FORMAT = '%Y-%m-%d %H:%M:%S'
