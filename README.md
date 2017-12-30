@@ -19,8 +19,8 @@ Using `docker-compose logs -f --tail 200` you can track import progress.
 The UI project is on http://localhost:3000/, while the backend is http://localhost:8000/
 ## Links
 
-- [UI Endpoint](http://localhost:3000/)
-- [API Documentation (Swagger)](http://localhost:8000/)
+- [UI Endpoint](http://localhost:3000/).
+- [API Documentation (Swagger)](http://localhost:8000/).
 - [Django Admin Panel](http://localhost:8000/admin/). Username `admin`, Password `admin`.
 
 ## Architecture
@@ -40,7 +40,7 @@ The chosen DB is [PostgreSQL](https://www.postgresql.org/) for these reasons:
 
 - The passed data have all the same structure so we can leverage on SQL schemas.
 - For this project we don't have any heavy write/read throughput since data are loaded from the CSV.
-- In the future we can leverage on JOINS: I imagined that every measurement can have Car and Tyre models as foreign keys.
+- In the future we can leverage on JOINs: I imagined that every measurement can have Car and Tyre models as foreign keys.
 - It fits very well with Django.
 
 ### Frontend
@@ -57,7 +57,13 @@ Frontend code in `web/` folder. It's written in ES6 Javascript, HTML and CSS. I 
 
 ### Overall Architecture
 
-Since this project is completely dockerized, scaling horizontally is very easy. We can use [Amazon Elastic Container Service](https://aws.amazon.com/ecs/) with [auto scaling](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-auto-scaling.html) and a [load balancer](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-load-balancing.html) in order to handle heavy workload for both frontend and backend. A useful [cloudwatch metric](https://aws.amazon.com/cloudwatch/) to trigger the scaling could be CPU usage.
+Since this project is completely dockerized, scaling horizontally is very easy. We can use [Amazon Elastic Container Service](https://aws.amazon.com/ecs/) with [auto scaling](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-auto-scaling.html) and a [load balancer](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-load-balancing.html) in order to handle heavy workload for backend. A useful [cloudwatch metric](https://aws.amazon.com/cloudwatch/) to trigger the scaling could be CPU usage.
+
+The frontend is made of only static files and there's no server-side rendering, so it can be stored on [S3](https://aws.amazon.com/s3/). S3 is known to be highly scalable storage.
+
+In order to improve latency of static file serving, we can use [Amazon CloudFront CDN](https://aws.amazon.com/cloudfront/).
+
+We can use [Amazon Kinesis](https://aws.amazon.com/kinesis/) to simplify real time tyre measurements acquiring/analysis.
 
 ### DB
 
