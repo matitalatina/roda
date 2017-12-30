@@ -79,7 +79,8 @@ const PageTemplate = ({
     footer = (
       <FooterWrapper>
         <Links>
-          <Link href={`${coreEndpoint}`} target="_blank" animated>API Documentation</Link>&nbsp;·&nbsp;
+          <Link href={`${coreEndpoint}/`} target="_blank" animated>API Documentation</Link>&nbsp;·&nbsp;
+          <Link href={`${coreEndpoint}/admin`} target="_blank" animated>Admin Panel</Link>&nbsp;·&nbsp;
           <Link href="https://github.com/matitalatina/roda" target="_blank" animated>Source Code</Link>
         </Links>
         <Credits>Made with&nbsp;<span role="img" aria-label="heart">❤️</span>&nbsp;by <Link href="https://www.mattianatali.it/" target="_blank">Mattia Natali</Link></Credits>

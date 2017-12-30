@@ -21,6 +21,7 @@ The UI project is on http://localhost:3000/, while the backend is http://localho
 
 - [UI Endpoint](http://localhost:3000/)
 - [API Documentation (Swagger)](http://localhost:8000/)
+- [Django Admin Panel](http://localhost:8000/admin/). Username `admin`, Password `admin`.
 
 ## Architecture
 
